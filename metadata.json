@@ -1,0 +1,13 @@
+{
+  "name": "AlexCline-dirtree",
+  "version": "0.2.1",
+  "author": "Alex Cline \u003calex.cline@gmail.com\u003e",
+  "license": "Apache License, Version 2.0",
+  "operatingsystem_support": [],
+  "project_page": "https://github.com/AlexCline/dirtree",
+  "requirements": [],
+  "source": "ssh://git@github.com/AlexCline/puppet-dirtree.git",
+  "summary": "The dirtree function builds an array of directories from a full directory path or an array of full directory paths.  The array can then be used to ensure all the required directories in a path are managed by puppet.",
+  "tags": [],
+  "dependencies": []
+}
