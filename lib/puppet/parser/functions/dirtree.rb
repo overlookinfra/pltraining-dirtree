@@ -33,7 +33,7 @@ from the resulting array.
     end
 
     unless exclude.is_a?(String)
-      raise Puppet::ParseError, "dirtree(): expected second argument to be a String, go #{exclude.inspect}"
+      raise Puppet::ParseError, "dirtree(): expected second argument to be a String, got #{exclude.inspect}"
     end
 
     unless Puppet::Util.absolute_path?(exclude, :posix) or Puppet::Util.absolute_path?(exclude, :windows)
@@ -41,7 +41,7 @@ from the resulting array.
     end
 
     paths = [ paths ] if paths.is_a?(String)
-    
+
     # If exclude path in windows format, ensure path separators are all "\\"
     Puppet::Util.absolute_path?(exclude, :windows) ? exclude.gsub!('/','\\') : nil
 
@@ -53,7 +53,7 @@ from the resulting array.
       unless is_posix or is_windows
         raise Puppet::ParseError, "dirtree(): #{path.inspect} is not an absolute path."
       end
-      
+
       # If path is in windows format, ensure path separators are all "\\"
       is_windows ? path.gsub!('/','\\') : nil
 

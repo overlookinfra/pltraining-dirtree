@@ -1,9 +1,14 @@
 dirtree
 =======
 
-*This module provides the `dirtree` function.*
+This module provides the `dirtree` function and resource type, both used for
+recursive directory management.
 
-The `dirtree` function accepts a string containing an absolute directory path
+## Usage
+
+### `dirtree()` function
+
+This function accepts a string containing an absolute directory path
 and will return an array of the tree containing all the directories of that path.
 
 The first parameter can also be an array of absolute directory paths, which will
@@ -15,8 +20,7 @@ from the resulting array. This excludes all intermediate paths between the syste
 
 Best efforts have been made to make this function compatible with both Windows and Linux systems.
 
-Examples
---------
+#### Examples
 
     dirtree('/usr/share/puppet')
     Will return: ['/usr', '/usr/share', '/usr/share/puppet']
@@ -48,25 +52,54 @@ You can use the `dirtree` function in a class to enumerate all required director
       ensure_resource('file', $dirtree, {'ensure' => 'directory'})
     }
 
-With the puppetlabs-stdlib 1.4.0 module, the ensure_resource function accepts an array, which will
-create new resources with the names specified if they don't already exist.
+--------
+
+### `dirtree` resource type
+
+This resource type will simply ensure the existence of a directory. It cannot
+and will not manage ownership or permissions. You should use the `file` resource
+type for that. It's simply for use in the edge case in which you must use a
+directory which you cannot fully manage, for one reason or another.
+
+#### Examples
+
+    dirtree { 'a temp dir':
+      ensure  => present,
+      path    => '/tmp/foo/bar/baz',
+      parents => true,
+    }
+
+    dirtree { 'another temp dir with the same path':
+      ensure  => present,
+      path    => '/tmp/foo/bar/baz',
+    }
+
+    file { '/tmp/foo/bar/baz':
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
+
 
 Changes
 ------
 
-dirtree v0.2.2
-- Added clarification and code, that exclude path also works, if given paths are short than itself.
+* dirtree v0.2.2
+    * Added clarification and code, that exclude path also works, if given paths are short than itself.
+    * Included the `dirtree` resource type.
+    * More robust handling of Windows path separators.
 
-dirtree v0.2.1
-- Added the ability to pass an array of paths.  Thanks to [Ben Ford](https://github.com/binford2k)
+* dirtree v0.2.1
+    * Added the ability to pass an array of paths.  Thanks to [Ben Ford](https://github.com/binford2k)
 
-dirtree v0.2.0
-- Added optional second parameter specifying portion of the path to exclude.
+* dirtree v0.2.0
+    * Added optional second parameter specifying portion of the path to exclude.
 
 Support
 -------
 
-Please file tickets and issues using [GitHub Issues](https://github.com/AlexCline/dirtree/issues)
+Please file tickets and issues using [GitHub Issues](https://github.com/puppetlabs/pltraining-dirtree/issues)
 
 
 License
