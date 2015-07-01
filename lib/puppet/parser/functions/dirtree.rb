@@ -41,6 +41,9 @@ from the resulting array.
     end
 
     paths = [ paths ] if paths.is_a?(String)
+    
+    # If exclude path in windows format, ensure path separators are all "\\"
+    Puppet::Util.absolute_path?(exclude, :windows) ? exclude.gsub!('/','\\') : nil
 
     result = []
     paths.each do |path|
@@ -50,6 +53,9 @@ from the resulting array.
       unless is_posix or is_windows
         raise Puppet::ParseError, "dirtree(): #{path.inspect} is not an absolute path."
       end
+      
+      # If path is in windows format, ensure path separators are all "\\"
+      is_windows ? path.gsub!('/','\\') : nil
 
       sep = is_posix ? '/' : '\\'
 
