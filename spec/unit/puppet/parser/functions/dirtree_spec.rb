@@ -46,9 +46,24 @@ describe "the dirtree function" do
     result.should(match_array(['/usr/share', '/usr/share/puppet']))
   end
 
+  it "should return an array of the posix directory tree without anything below the 2nd argument" do
+    result = scope.function_dirtree(['/usr/share/puppet', '/usr/share'])
+    result.should(match_array(['/usr/share/puppet']))
+  end
+
+  it "should return an empty array of the posix directory tree if the path is implicitely excluded by the 2nd argument" do
+    result = scope.function_dirtree(['/usr/share', '/usr/share/puppet'])
+    result.should(match_array([]))
+  end
+
   it "should return an array of the windows directory tree without the first directory" do
     result = scope.function_dirtree(['C:\\windows\\system32\\drivers\\', 'C:\\windows'])
     result.should(match_array(["C:\\windows\\system32", "C:\\windows\\system32\\drivers"]))
+  end
+
+  it "should return an empty array of the windows directory tree if all given paths are excluded by 2nd argument" do
+    result = scope.function_dirtree(['C:\\windows', 'C:\\windows\\system32'], 'C:\\windows\\system32\\drivers')
+    result.should(match_array([]))
   end
 
   it "should return the array without the first directory if there's a trailing slash on the exclude" do

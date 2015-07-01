@@ -60,7 +60,8 @@ from the resulting array.
       # Start trimming and pushing to the new array
       # If the path is a posix path, the string will be empty when done parsing
       # If the path is a windows path, the string will have the drive letter and a colon when done parsing.
-      while ( path != '' and is_posix ) or ( path.length > 2 and is_windows ) and ( path != exclude )
+      # If the path is already shorter then the exclude path, no output will be generated.
+      while ( path != '' and is_posix ) or ( path.length > 2 and is_windows ) and ( not exclude.start_with?(path) )
         result.unshift(path)
         path = path[0..path.rindex(sep)].chop
       end

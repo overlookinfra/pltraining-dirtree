@@ -10,7 +10,8 @@ The first parameter can also be an array of absolute directory paths, which will
 be transformed into an array of all trees containing all directories in the paths.
 
 An optional second parameter can be supplied that contains a path to exclude
-from the resulting array.
+from the resulting array. This excludes all intermediate paths between the system 'root'
+(i.e. '/' or 'X:') and the given exclude path as well.
 
 Best efforts have been made to make this function compatible with both Windows and Linux systems.
 
@@ -31,6 +32,9 @@ Examples
     dirtree('/usr/share/puppet', '/usr')
     Will return: ['/usr/share', '/usr/share/puppet']
 
+    dirtree('/usr/share', '/usr/share/puppet')
+    Will return: []
+
     dirtree('C:\\windows\\system32\\drivers', 'C:\\windows')
     Will return: ['C:\\windows\\system32', 'C:\\windows\\system32\\drivers']
 
@@ -49,6 +53,9 @@ create new resources with the names specified if they don't already exist.
 
 Changes
 ------
+
+dirtree v0.2.2
+- Added clarification and code, that exclude path also works, if given paths are short than itself.
 
 dirtree v0.2.1
 - Added the ability to pass an array of paths.  Thanks to [Ben Ford](https://github.com/binford2k)
