@@ -11,11 +11,7 @@ Puppet::Type.newtype(:dirtree) do
     end
   end
 
-  newparam(:name, :namevar => true) do
-    desc 'Just a name to identify this resource by.'
-  end
-
-  newparam(:path) do
+  newparam(:path, :namevar => true) do
     desc 'The path of the directory'
     validate do |value|
       unless Puppet::Util.absolute_path?(value)
